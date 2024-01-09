@@ -1,0 +1,13 @@
+
+.myButton{
+    -fx-text-fill: yellow;
+    -fx-background-color: green;
+}
+#myButton{
+    -fx-text-fill: white;
+    -fx-background-color: green;
+}
+.myLabel{
+    -fx-text-fill: blue;
+    -fx-font-size: 16pt;
+}

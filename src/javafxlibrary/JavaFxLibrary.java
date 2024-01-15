@@ -12,25 +12,41 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
  * @author Melnikov
  */
 public class JavaFxLibrary extends Application {
-    private Button button;
+    public static final int WIDTH = 600;
+    public static final int HEIGHT = 400;
+    private final EntityManager em;
+    private Stage primaryStage;
+
+    public JavaFxLibrary() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaFxLibraryPU");
+        em = emf.createEntityManager();
+    }
+   
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage primaryStage) throws Exception {
+        setPrimaryStage(primaryStage);
+        this.primaryStage.setTitle("JKTVFXLibrary");
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("home.fxml"));
         Parent root = loader.load();
         HomeController homeController = loader.getController();
-        Scene scene = new Scene(root);
+        homeController.setApp(this);
+        homeController.showAboutScene();
+        Scene scene = new Scene(root, WIDTH,HEIGHT);
         //Подключаем каскадную таблицу стилей из пакета javafxlibrary
         //scene.getStylesheets().add(getClass().getResource("home.css").toExternalForm());
         scene.getStylesheets().add(getClass().getResource("/javafxlibrary/home.css").toExternalForm());
-        stage.setScene(scene);
-        stage.show();
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     /**
@@ -38,6 +54,18 @@ public class JavaFxLibrary extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public EntityManager getEntityManager() {
+        return em;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
     
 }

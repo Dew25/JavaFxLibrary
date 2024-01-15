@@ -4,17 +4,16 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox fx:controller="javafxlibrary.HomeController" prefHeight="533.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="vbHomeRoot" prefHeight="533.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxlibrary.HomeController">
    <children>
       <MenuBar>
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Книги">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem fx:id="miAddNewBook" mnemonicParsing="false" onAction="#mbShowAddNewBook" text="Добавить новую книгу" />
+              <MenuItem fx:id="miListBooks" mnemonicParsing="false" onAction="#mbShowListBooks" text="Список книг" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
@@ -29,13 +28,13 @@
           </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane fx:id="content" prefHeight="515.0" prefWidth="800.0">
+      <VBox fx:id="vbContent" prefHeight="515.0" prefWidth="800.0">
          <children>
             <VBox layoutX="50.0" layoutY="55.0" />
          </children>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
-      </AnchorPane>
+      </VBox>
    </children>
 </VBox>

@@ -5,8 +5,7 @@
  */
 package javafxlibrary;
 
-import about.AboutController;
-import books.listbooks.ListbooksController;
+import books.book.BookController;
 import books.newbook.NewbookController;
 import entity.Book;
 import java.io.ByteArrayInputStream;
@@ -20,15 +19,13 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Parent;
+import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
 
 /**
  *
@@ -39,7 +36,7 @@ public class HomeController implements Initializable {
     @FXML
     private VBox vbContent;
     private JavaFxLibrary app;
-    private  Screen screen = Screen.getPrimary();
+   
     
     
     @Override
@@ -52,7 +49,6 @@ public class HomeController implements Initializable {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/about/about.fxml"));
             BorderPane bpAboutRoot = loader.load();
-            Rectangle2D bounds = screen.getVisualBounds();
             bpAboutRoot.setPrefWidth(JavaFxLibrary.WIDTH);
             bpAboutRoot.setPrefHeight(JavaFxLibrary.HEIGHT);
             this.vbContent.getChildren().clear();
@@ -85,14 +81,25 @@ public class HomeController implements Initializable {
         
         try {
             HBox hbListBooksRoot = loader.load();
-            ListbooksController listbooksController = loader.getController();
+            hbListBooksRoot.getChildren().clear();
+//            ListbooksController listbooksController = loader.getController();
             List<Book> listBooks = getApp().getEntityManager().createQuery("SELECT b FROM Book b").getResultList();
             for (int i = 0; i < listBooks.size(); i++) {
                 Book book = listBooks.get(i);
-                ImageView ivCoverBook = FXMLLoader.load(getClass().getResource("/books/book/book.fxml"));
+                FXMLLoader bookLoader = new FXMLLoader();
+                bookLoader.setLocation(getClass().getResource("/books/book/book.fxml"));
+                ImageView ivCoverBookRoot = bookLoader.load();
+                BookController bookController = bookLoader.getController();
+                bookController.setApp(app);
+                ivCoverBookRoot.setCursor(Cursor.OPEN_HAND);
+                ivCoverBookRoot.setOnMouseClicked(event -> {
+                    if (event.getButton() == MouseButton.PRIMARY) {
+                        bookController.showBook(book);
+                    }
+                });
                 Image image = new Image(new ByteArrayInputStream(book.getCover()));
-                ivCoverBook.setImage(image);
-                hbListBooksRoot.getChildren().add(ivCoverBook);
+                ivCoverBookRoot.setImage(image);
+                hbListBooksRoot.getChildren().add(ivCoverBookRoot);
             }
             vbContent.getChildren().clear();
             vbContent.getChildren().add(hbListBooksRoot);

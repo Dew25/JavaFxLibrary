@@ -1,0 +1,5 @@
+.grid-pane .text-field{
+    -fx-pref-width: 100%;
+    -fx-max-width: 100%;
+    -fx-min-width: 100%;
+}

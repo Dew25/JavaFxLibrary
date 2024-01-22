@@ -5,6 +5,7 @@
  */
 package javafxlibrary;
 
+import entity.User;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,10 +20,13 @@ import javax.persistence.Persistence;
  * @author Melnikov
  */
 public class JavaFxLibrary extends Application {
+    public static enum roles {ADMIN, MANAGER, USER};
+    public static User currentUser;
     public static final int WIDTH = 600;
     public static final int HEIGHT = 400;
     private final EntityManager em;
     private Stage primaryStage;
+    
 
     public JavaFxLibrary() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaFxLibraryPU");

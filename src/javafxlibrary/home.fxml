@@ -16,9 +16,10 @@
               <MenuItem fx:id="miListBooks" mnemonicParsing="false" onAction="#mbShowListBooks" text="Список книг" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" text="Пользователи">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem mnemonicParsing="false" onAction="#mbShowLonginForm" text="Вход" />
+                  <MenuItem mnemonicParsing="false" onAction="#mbShowAddNewUser" text="Регистрация" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

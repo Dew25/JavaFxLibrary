@@ -26,6 +26,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import users.login.LoginController;
+import users.newuser.NewuserController;
 
 /**
  *
@@ -58,6 +60,7 @@ public class HomeController implements Initializable {
         }
     }
     @FXML public void mbShowAddNewBook(){
+        
         this.app.getPrimaryStage().setTitle("JKTVFXLibrary-добавить новую книгу");
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/books/newbook/newbook.fxml"));
@@ -74,6 +77,42 @@ public class HomeController implements Initializable {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, "Невозможно заргузить newbookRoot", ex);
         }
     }
+    @FXML public void mbShowAddNewUser(){
+        this.app.getPrimaryStage().setTitle("JKTVFXLibrary-регистрация пользователя");
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/users/newuser/newuser.fxml"));
+        
+        try {
+            VBox vbNewUserRoot = loader.load();
+            vbNewUserRoot.setPrefHeight(JavaFxLibrary.HEIGHT);
+            vbNewUserRoot.setPrefWidth(JavaFxLibrary.WIDTH);
+            NewuserController newuserController = loader.getController();
+            newuserController.setEntityManager(getApp().getEntityManager());
+            vbContent.getChildren().clear();
+            vbContent.getChildren().add(vbNewUserRoot);
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, "Невозможно заргузить vbNewUserRoot", ex);
+        }
+    }
+    @FXML public void mbShowLonginForm(){
+        this.app.getPrimaryStage().setTitle("JKTVFXLibrary-вход пользователя");
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/users/login/login.fxml"));
+        
+        try {
+            VBox vbLoginRoot = loader.load();
+            vbLoginRoot.setPrefHeight(JavaFxLibrary.HEIGHT);
+            vbLoginRoot.setPrefWidth(JavaFxLibrary.WIDTH);
+            LoginController loginController = loader.getController();
+            loginController.setEntityManager(getApp().getEntityManager());
+            
+            vbContent.getChildren().clear();
+            vbContent.getChildren().add(vbLoginRoot);
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, "Невозможно заргузить vbLoginRoot", ex);
+        }
+    }
+    
     @FXML public void mbShowListBooks(){
         this.app.getPrimaryStage().setTitle("JKTVFXLibrary-список книг");
         FXMLLoader loader = new FXMLLoader();

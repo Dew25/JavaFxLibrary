@@ -38,6 +38,7 @@ public class HomeController implements Initializable {
     @FXML
     private VBox vbContent;
     private JavaFxLibrary app;
+    private String infoMessage;
    
     
     
@@ -60,7 +61,12 @@ public class HomeController implements Initializable {
         }
     }
     @FXML public void mbShowAddNewBook(){
-        
+        if(javafxlibrary.JavaFxLibrary.currentUser == null || !javafxlibrary.JavaFxLibrary.currentUser.getRoles()
+                .contains(javafxlibrary.JavaFxLibrary.roles.MANAGER.toString())){
+            this.infoMessage="Для этого действия вы должны быть менеджером. Авторизуйтесь";
+            this.mbShowLonginForm();
+            return;
+        }
         this.app.getPrimaryStage().setTitle("JKTVFXLibrary-добавить новую книгу");
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/books/newbook/newbook.fxml"));
@@ -105,7 +111,7 @@ public class HomeController implements Initializable {
             vbLoginRoot.setPrefWidth(JavaFxLibrary.WIDTH);
             LoginController loginController = loader.getController();
             loginController.setEntityManager(getApp().getEntityManager());
-            
+            loginController.setInfo(this.infoMessage);
             vbContent.getChildren().clear();
             vbContent.getChildren().add(vbLoginRoot);
         } catch (IOException ex) {

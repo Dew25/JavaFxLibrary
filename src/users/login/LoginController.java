@@ -65,5 +65,7 @@ public class LoginController implements Initializable {
     public EntityManager getEntityManager() {
         return this.em;
     }
-    
+    public void setInfo(String message){
+        this.lbInfo.setText(message);
+    }
 }

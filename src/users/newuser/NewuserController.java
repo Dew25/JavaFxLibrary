@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javax.persistence.EntityManager;
 
@@ -21,6 +22,7 @@ import javax.persistence.EntityManager;
  */
 public class NewuserController implements Initializable {
     private EntityManager em;
+    @FXML private Label lbInfo;
     @FXML private TextField tfFirstname;
     @FXML private TextField tfLastname;
     @FXML private TextField tfLogin;
@@ -38,7 +40,13 @@ public class NewuserController implements Initializable {
             em.getTransaction().begin();
             em.persist(user);
             em.getTransaction().commit();
+            tfFirstname.setText("");
+            tfLastname.setText("");
+            tfLogin.setText("");
+            tfPassword.setText("");
+            lbInfo.setText(String.format("Пользоватеуль %s добавлен", user.getLogin()));
         } catch (Exception e) {
+            lbInfo.setText("Пользователя добавить не удалось, возможно такой логин уже зарегистрирован");
             System.out.println("Записать пользовател в базу не удалось: "+e);
         }
     }

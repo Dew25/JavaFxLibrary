@@ -11,22 +11,28 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vbNewUserRoot" prefHeight="355.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="users.newuser.NewuserController">
+<VBox fx:id="vbNewUserRoot" prefHeight="355.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="users.newuser.NewuserController">
    <children>
-      <Label alignment="TOP_CENTER" prefHeight="74.0" prefWidth="600.0" text="Регистрация пользователя">
+      <Label alignment="TOP_CENTER" prefHeight="39.0" prefWidth="600.0" text="Регистрация пользователя">
          <font>
             <Font size="25.0" />
          </font>
          <VBox.margin>
-            <Insets />
+            <Insets top="10.0" />
          </VBox.margin>
       </Label>
-      <GridPane alignment="CENTER" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="228.0" prefWidth="578.0" stylesheets="@newuser.css" vgap="10.0">
+      <Label fx:id="lbInfo" alignment="CENTER" prefHeight="23.0" prefWidth="600.0" textFill="#104a91">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <GridPane alignment="CENTER" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="228.0" prefWidth="557.0" stylesheets="@newuser.css" vgap="10.0">
          <columnConstraints>
             <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="186.0" />
             <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="443.0" minWidth="10.0" prefWidth="414.0" />
          </columnConstraints>
          <rowConstraints>
+            <RowConstraints />
             <RowConstraints maxHeight="171.0" minHeight="10.0" prefHeight="63.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="253.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="261.0" minHeight="10.0" prefHeight="66.0" valignment="CENTER" vgrow="SOMETIMES" />
@@ -34,7 +40,7 @@
             <RowConstraints maxHeight="261.0" minHeight="10.0" prefHeight="66.0" valignment="CENTER" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+            <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <children>
                   <Button fx:id="btAddNewUser" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#clickAddNewUser" text="Добавить пользователя">
                      <HBox.margin>
@@ -52,7 +58,7 @@
                   <Insets />
                </opaqueInsets>
             </HBox>
-            <Label text="Имя">
+            <Label text="Имя" GridPane.rowIndex="1">
                <font>
                   <Font size="18.0" />
                </font>
@@ -60,7 +66,7 @@
                   <Insets right="10.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Фамилия" GridPane.rowIndex="1">
+            <Label text="Фамилия" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
@@ -68,7 +74,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="tfLastname" styleClass="user-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="tfLastname" styleClass="user-field" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font size="18.0" />
                </font>
@@ -76,7 +82,7 @@
                   <Insets />
                </opaqueInsets>
             </TextField>
-            <Label text="Логин" GridPane.rowIndex="2">
+            <Label text="Логин" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>
@@ -84,7 +90,7 @@
                   <Insets right="10.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Пароль" GridPane.rowIndex="3">
+            <Label text="Пароль" GridPane.rowIndex="4">
                <font>
                   <Font size="18.0" />
                </font>
@@ -92,17 +98,17 @@
                   <Insets right="10.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="tfLogin" styleClass="user-field" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="tfLogin" prefHeight="39.0" prefWidth="375.0" styleClass="user-field" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="tfPassword" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TextField fx:id="tfPassword" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <font>
                   <Font size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="tfFirstname" GridPane.columnIndex="1">
+            <TextField fx:id="tfFirstname" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font size="18.0" />
                </font>

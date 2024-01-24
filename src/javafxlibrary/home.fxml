@@ -6,7 +6,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="vbHomeRoot" prefHeight="533.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxlibrary.HomeController">
+<VBox fx:id="vbHomeRoot" prefHeight="533.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxlibrary.HomeController">
    <children>
       <MenuBar>
         <menus>
@@ -25,7 +25,6 @@
             <Menu mnemonicParsing="false" text="Администратор">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#mbShowAdminpaneForm" text="Панель администратора" />
-                  <MenuItem mnemonicParsing="false" onAction="#mbShowAddNewUser" text="Регистрация" />
                </items>
             </Menu>
         </menus>

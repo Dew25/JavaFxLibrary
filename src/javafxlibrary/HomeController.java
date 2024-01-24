@@ -5,6 +5,7 @@
  */
 package javafxlibrary;
 
+import admin.AdminpaneController;
 import books.book.BookController;
 import books.newbook.NewbookController;
 import entity.Book;
@@ -23,6 +24,7 @@ import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -52,13 +54,17 @@ public class HomeController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/admin/adminpane.fxml"));
-            BorderPane bpAboutRoot = loader.load();
-            bpAboutRoot.setPrefWidth(JavaFxLibrary.WIDTH);
-            bpAboutRoot.setPrefHeight(JavaFxLibrary.HEIGHT);
+            AnchorPane apAdmilRoot = loader.load();
+            AdminpaneController adminpaneController = loader.getController();
+            adminpaneController.setEntityManager(getApp().getEntityManager());
+            adminpaneController.setCbUsers();
+            adminpaneController.setCbRoles();
+            apAdmilRoot.setPrefWidth(JavaFxLibrary.WIDTH);
+            apAdmilRoot.setPrefHeight(JavaFxLibrary.HEIGHT);
             this.vbContent.getChildren().clear();
-            vbContent.getChildren().add(bpAboutRoot);
+            vbContent.getChildren().add(apAdmilRoot);
         } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, "Нет /about/about.fxml", ex);
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, "Нет /admin/adminpane.fxml", ex);
         }
     }
     public void showAboutScene(){

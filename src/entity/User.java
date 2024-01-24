@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -124,7 +125,14 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", login=" + login + ", password=" + password + ", firstname=" + firstname + ", lastname=" + lastname + '}';
+        return "User{" 
+                + "id=" + id 
+                + ", login=" + login 
+                + ", password=" + password 
+                + ", firstname=" + firstname 
+                + ", lastname=" + lastname 
+                + ", roles=" + Arrays.toString(roles.toArray())
+                + '}';
     }
 
     public List<String> getRoles() {

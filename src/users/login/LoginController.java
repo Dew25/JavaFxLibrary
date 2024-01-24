@@ -11,9 +11,12 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javax.persistence.EntityManager;
 
 /**
@@ -25,9 +28,10 @@ public class LoginController implements Initializable {
 
     private EntityManager em;
     @FXML private TextField tfLogin;
-    @FXML private TextField tfPassword;
+    @FXML private PasswordField pfPassword;
     @FXML private Label lbInfo;
-    @FXML private MenuItem miListBooks;
+    @FXML private Button btLogin;
+    
     
     
     
@@ -37,9 +41,10 @@ public class LoginController implements Initializable {
         boolean isLogin = false;
         for (int i = 0; i < listUsers.size(); i++) {
             user = listUsers.get(i);
-            if(user.getLogin().equals(tfLogin.getText()) && user.getPassword().equals(tfPassword.getText())){
+            if(user.getLogin().equals(tfLogin.getText()) && user.getPassword().equals(pfPassword.getText())){
                 javafxlibrary.JavaFxLibrary.currentUser = user;
                 isLogin = true;
+                break;
             }
         }
         if(!isLogin){
@@ -48,14 +53,27 @@ public class LoginController implements Initializable {
            lbInfo.setText(String.format("Привет %s %s, добро пожаловть!", user.getFirstname(), user.getLastname()));
         }
         tfLogin.setText("");
-        tfPassword.setText("");
+        pfPassword.setText("");
     }
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // Обработчик события для TextField
+        pfPassword.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                btLogin.fire();
+            }
+        });
+
+        // Обработчик события для Button
+        btLogin.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+               btLogin.fire();
+            }
+        });
+
     }    
 
     public void setEntityManager(EntityManager entityManager) {

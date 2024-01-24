@@ -18,7 +18,9 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
@@ -35,6 +37,8 @@ public class NewbookController implements Initializable {
     private File selectedFile;
     @FXML private TextField tfTitle;
     @FXML private Button btSelectCover;
+    @FXML private Label lbInfo;
+    @FXML private Button btAddNewBook;
     
 
     public NewbookController() {
@@ -46,7 +50,18 @@ public class NewbookController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        tfTitle.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                lbInfo.setText("");
+            } 
+        });
         
+        // Обработчик события для Button
+        btAddNewBook.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+               btAddNewBook.fire();
+            }
+        });
     }
     @FXML
     public void selectCover(){
@@ -74,7 +89,9 @@ public class NewbookController implements Initializable {
             em.persist(book);
             em.getTransaction().commit();
             //сообщить об успешном добавлении книги
+            lbInfo.setText("Книга успешно добавлена");
         } catch (IOException ex) {
+            lbInfo.setText("Книгу добавить не удалось");
             Logger.getLogger(NewbookController.class.getName()).log(Level.SEVERE, null, ex);
         }
         btSelectCover.setText("Выбрать обложку");

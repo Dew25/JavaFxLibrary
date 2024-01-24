@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -29,6 +30,7 @@ import javafxlibrary.JavaFxLibrary;
  */
 public class BookController implements Initializable {
     private JavaFxLibrary app;
+    private Stage bookWindow;
     /**
      * Initializes the controller class.
      */
@@ -38,7 +40,7 @@ public class BookController implements Initializable {
     }    
 
     public void showBook(Book book) {
-       Stage bookWindow = new Stage();
+       this.bookWindow = new Stage();
        bookWindow.initModality(Modality.WINDOW_MODAL);
        bookWindow.initOwner(getApp().getPrimaryStage());
        Image image = new Image(new ByteArrayInputStream(book.getCover()));
@@ -54,6 +56,17 @@ public class BookController implements Initializable {
        hbButtons.setPadding(new Insets(20,20,20,20));
        Button btOk = new Button("Читать");
        Button btCansel = new Button("Закрыть");
+       // Обработчик события для Button
+       btCansel.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+               bookWindow.close();
+            }
+        });
+       btOk.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                takeOnBook(book);
+            }
+        });
        hbButtons.getChildren().addAll(btOk,btCansel);
        vbBook.getChildren().add(hbButtons);
        Scene scene = new Scene(vbBook,550,700);
@@ -61,6 +74,10 @@ public class BookController implements Initializable {
        bookWindow.setScene(scene);
        bookWindow.show();
         
+    }
+    private void takeOnBook(Book book){
+        System.out.println(String.format("Выдаем книгу \"%s\" читателю %s %s",book.getTitle(), javafxlibrary.JavaFxLibrary.currentUser.getFirstname(), javafxlibrary.JavaFxLibrary.currentUser.getLastname()));
+        bookWindow.close();
     }
 
     public JavaFxLibrary getApp() {

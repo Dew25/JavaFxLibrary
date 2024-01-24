@@ -47,6 +47,20 @@ public class HomeController implements Initializable {
 //        showAboutScene();
         
     }    
+    
+    public void mbShowAdminpaneForm(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/admin/adminpane.fxml"));
+            BorderPane bpAboutRoot = loader.load();
+            bpAboutRoot.setPrefWidth(JavaFxLibrary.WIDTH);
+            bpAboutRoot.setPrefHeight(JavaFxLibrary.HEIGHT);
+            this.vbContent.getChildren().clear();
+            vbContent.getChildren().add(bpAboutRoot);
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, "Нет /about/about.fxml", ex);
+        }
+    }
     public void showAboutScene(){
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -120,6 +134,11 @@ public class HomeController implements Initializable {
     }
     
     @FXML public void mbShowListBooks(){
+        if(javafxlibrary.JavaFxLibrary.currentUser == null){
+            this.infoMessage="Авторизуйтесь";
+            this.mbShowLonginForm();
+            return;
+        }
         this.app.getPrimaryStage().setTitle("JKTVFXLibrary-список книг");
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/books/listbooks/listbooks.fxml"));

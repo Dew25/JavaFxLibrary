@@ -20,7 +20,7 @@ import javax.persistence.Persistence;
  * @author Melnikov
  */
 public class JavaFxLibrary extends Application {
-    public static enum roles {ADMIN, MANAGER, USER};
+    public static enum roles {ADMINISTRATOR, MANAGER, USER};
     public static User currentUser;
     public static final int WIDTH = 600;
     public static final int HEIGHT = 400;

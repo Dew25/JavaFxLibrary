@@ -22,11 +22,12 @@
                   <MenuItem mnemonicParsing="false" onAction="#mbShowAddNewUser" text="Регистрация" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
+            <Menu mnemonicParsing="false" text="Администратор">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#mbShowAdminpaneForm" text="Панель администратора" />
+                  <MenuItem mnemonicParsing="false" onAction="#mbShowAddNewUser" text="Регистрация" />
+               </items>
+            </Menu>
         </menus>
       </MenuBar>
       <VBox fx:id="vbContent" prefHeight="515.0" prefWidth="800.0">

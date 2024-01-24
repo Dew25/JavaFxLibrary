@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javax.persistence.EntityManager;
 
 /**
@@ -55,7 +56,19 @@ public class NewuserController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // Обработчик события для TextField
+        tfPassword.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                btAddNewUser.fire();
+            }
+        });
+        // Обработчик события для Button
+        btAddNewUser.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+               btAddNewUser.fire();
+            }
+        });
+
     }    
 
     public EntityManager getEntityManager() {

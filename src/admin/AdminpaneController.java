@@ -36,34 +36,23 @@ public class AdminpaneController implements Initializable {
     
     
     public void setCbUsers(){
-       
-//        List<User> users = getEntityManager().createQuery("SELECT u FROM User u").getResultList();
         cbUsers.setItems(FXCollections.observableArrayList(getEntityManager().createQuery("SELECT u FROM User u").getResultList()));
-        cbUsers.setCellFactory(new Callback<ListView<User>,ListCell<User>>(){
+        cbUsers.setCellFactory(param -> new ListCell<User>(){
             @Override
-            public ListCell<User> call(ListView<User> param) {
-                return new ListCell<User>() {
-                    @Override
-                    protected void updateItem(User user, boolean empty) {
-                        super.updateItem(user, empty);
-
-                        if (user == null || empty) {
-                            setText(null);
-                        } else {
-                            setText(
-                                user.getFirstname()
+            protected void updateItem(User user,boolean empty){
+                super.updateItem(user, empty);
+                if(user==null || empty){
+                    setText(null);
+                }else{
+                    setText(user.getFirstname()
                                 +" "
                                 +user.getLastname()
                                 +" ("
                                 +user.getLogin()
                                 +")" 
                                 + " - роли " 
-                                + Arrays.toString(user.getRoles().toArray())
-                            );
-                            
-                        }
-                    }
-                };
+                                + Arrays.toString(user.getRoles().toArray()));
+                }
             }
         });
         cbUsers.setButtonCell(new ListCell<User>() {

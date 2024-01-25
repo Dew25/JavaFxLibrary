@@ -18,6 +18,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javax.persistence.EntityManager;
+import tools.PassEncrypt;
 
 /**
  * FXML Controller class
@@ -36,12 +37,13 @@ public class LoginController implements Initializable {
     
     
     @FXML void clickLogin(){
+        PassEncrypt pe = new PassEncrypt();
         User user = new User();
         List<User> listUsers = em.createQuery("SELECT u FROM User u").getResultList();
         boolean isLogin = false;
         for (int i = 0; i < listUsers.size(); i++) {
             user = listUsers.get(i);
-            if(user.getLogin().equals(tfLogin.getText()) && user.getPassword().equals(pfPassword.getText())){
+            if(user.getLogin().equals(tfLogin.getText()) && user.getPassword().equals(pe.getEncryptPassword(pfPassword.getText(),pe.getSalt()))){
                 javafxlibrary.JavaFxLibrary.currentUser = user;
                 isLogin = true;
                 break;

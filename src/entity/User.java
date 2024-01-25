@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -36,7 +37,7 @@ public class User implements Serializable {
     private String firstname;
     private String lastname;
     @ElementCollection
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE},orphanRemoval = true)
     private List<String> roles = new ArrayList<>();
 
     public User() {

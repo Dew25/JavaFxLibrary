@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import tools.PassEncrypt;
 
 /**
  *
@@ -27,6 +28,7 @@ public class JavaFxLibrary extends Application {
     private final EntityManager em;
     private Stage primaryStage;
     
+    
 
     public JavaFxLibrary() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JavaFxLibraryPU");
@@ -35,6 +37,7 @@ public class JavaFxLibrary extends Application {
    
     @Override
     public void start(Stage primaryStage) throws Exception {
+        createSuperUser();
         setPrimaryStage(primaryStage);
         this.primaryStage.setTitle("JKTVFXLibrary");
         FXMLLoader loader = new FXMLLoader();
@@ -49,6 +52,27 @@ public class JavaFxLibrary extends Application {
         scene.getStylesheets().add(getClass().getResource("/javafxlibrary/home.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+    private void createSuperUser(){
+        try {
+            getEntityManager().createQuery("SELECT u FROM User u WHERE u.login = :login")
+                    .setParameter("login", "admin")
+                    .getSingleResult();
+        } catch (Exception e) {
+             PassEncrypt pe = new PassEncrypt();
+             User userAdmin = new User();
+             userAdmin.setFirstname("Juri");
+             userAdmin.setLastname("Melnikov");
+             userAdmin.setLogin("admin");
+             userAdmin.setPassword(pe.getEncryptPassword("12345",pe.getSalt()));
+             userAdmin.getRoles().add(roles.ADMINISTRATOR.toString());
+             userAdmin.getRoles().add(roles.MANAGER.toString());
+             userAdmin.getRoles().add(roles.USER.toString());
+             getEntityManager().getTransaction().begin();
+             getEntityManager().persist(userAdmin);
+             getEntityManager().getTransaction().commit();
+             
+        }
     }
 
     /**

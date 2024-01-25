@@ -51,6 +51,12 @@ public class HomeController implements Initializable {
     }    
     
     public void mbShowAdminpaneForm(){
+        if(javafxlibrary.JavaFxLibrary.currentUser == null || !javafxlibrary.JavaFxLibrary.currentUser.getRoles()
+                .contains(javafxlibrary.JavaFxLibrary.roles.ADMINISTRATOR.toString())){
+            this.infoMessage="Для этого действия вы должны быть администратором. Авторизуйтесь";
+            this.mbShowLonginForm();
+            return;
+        }
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/admin/adminpane.fxml"));

@@ -14,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
@@ -31,11 +32,13 @@ public class AdminpaneController implements Initializable {
     private Enum selectedRole;
     @FXML private ComboBox cbUsers;
     @FXML private ComboBox cbRoles;
+    @FXML private Label lbInfo;
     
     
     public void setCbUsers(){
-        List<User> users = getEntityManager().createQuery("SELECT u FROM User u").getResultList();
-        cbUsers.setItems(FXCollections.observableArrayList(users));
+       
+//        List<User> users = getEntityManager().createQuery("SELECT u FROM User u").getResultList();
+        cbUsers.setItems(FXCollections.observableArrayList(getEntityManager().createQuery("SELECT u FROM User u").getResultList()));
         cbUsers.setCellFactory(new Callback<ListView<User>,ListCell<User>>(){
             @Override
             public ListCell<User> call(ListView<User> param) {
@@ -57,16 +60,16 @@ public class AdminpaneController implements Initializable {
                                 + " - роли " 
                                 + Arrays.toString(user.getRoles().toArray())
                             );
+                            
                         }
                     }
                 };
             }
         });
-        cbUsers.setButtonCell(new javafx.scene.control.ListCell<User>() {
+        cbUsers.setButtonCell(new ListCell<User>() {
             @Override
             protected void updateItem(User user, boolean empty) {
                 super.updateItem(user, empty);
-
                 if (user == null || empty) {
                     setText(null);
                 } else {
@@ -83,7 +86,8 @@ public class AdminpaneController implements Initializable {
         });
         cbUsers.setOnAction(event->{
             this.selectedUser = (User) cbUsers.getValue();
-            System.out.println(selectedUser.toString());
+            //System.out.println(selectedUser.toString());
+            lbInfo.setText("");
         });
     }
     public void setCbRoles(){
@@ -114,8 +118,31 @@ public class AdminpaneController implements Initializable {
         });
         cbRoles.setOnAction(event->{
             this.selectedRole = (javafxlibrary.JavaFxLibrary.roles) cbRoles.getValue();
-            System.out.println(selectedRole.toString());
+            //System.out.println(selectedRole.toString());
+            lbInfo.setText("");
         });
+    }
+    @FXML public void clickButtonAddRole(){
+        if(!this.selectedUser.getRoles().contains(this.selectedRole.toString())){
+            this.selectedUser.getRoles().add(this.selectedRole.toString());
+            this.changeRole();
+        }
+    }
+    @FXML public void clickButtonRemoveRole(){
+        if(this.selectedUser.getLogin().equals("admin")){
+            lbInfo.setText("Изменение невозможно!");
+            return;
+        }
+        if(this.selectedUser.getRoles().contains(this.selectedRole.toString())){
+            this.selectedUser.getRoles().remove(this.selectedRole.toString());
+            this.changeRole();
+        }
+    }
+    private void changeRole(){
+        getEntityManager().getTransaction().begin();
+        getEntityManager().merge(this.selectedUser);
+        getEntityManager().getTransaction().commit();
+        setCbUsers();
     }
     /**
      * Initializes the controller class.
@@ -133,8 +160,6 @@ public class AdminpaneController implements Initializable {
         return em;
     }
 
-    public void setEm(EntityManager em) {
-        this.em = em;
-    }
+    
     
 }

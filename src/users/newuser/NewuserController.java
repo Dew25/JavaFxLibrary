@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javax.persistence.EntityManager;
+import tools.PassEncrypt;
 
 /**
  * FXML Controller class
@@ -31,11 +32,12 @@ public class NewuserController implements Initializable {
     @FXML private Button btAddNewUser;
     
     @FXML public void clickAddNewUser(){
+        PassEncrypt pe = new PassEncrypt();
         User user = new User();
         user.setFirstname(tfFirstname.getText());
         user.setLastname(tfLastname.getText());
         user.setLogin(tfLogin.getText());
-        user.setPassword(tfPassword.getText());
+        user.setPassword(pe.getEncryptPassword(tfPassword.getText(),pe.getSalt()));
         user.getRoles().add(javafxlibrary.JavaFxLibrary.roles.USER.toString());
         try {
             em.getTransaction().begin();

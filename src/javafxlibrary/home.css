@@ -11,3 +11,9 @@
     -fx-text-fill: blue;
     -fx-font-size: 16pt;
 }
+.info-text{
+    -fx-text-fill: #3c7a38;
+}
+.error-text{
+    -fx-text-fill: #eb3343;
+}

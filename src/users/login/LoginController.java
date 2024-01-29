@@ -38,24 +38,52 @@ public class LoginController implements Initializable {
     
     @FXML void clickLogin(){
         PassEncrypt pe = new PassEncrypt();
-        User user = new User();
-        List<User> listUsers = em.createQuery("SELECT u FROM User u").getResultList();
-        boolean isLogin = false;
-        for (int i = 0; i < listUsers.size(); i++) {
-            user = listUsers.get(i);
-            if(user.getLogin().equals(tfLogin.getText()) && user.getPassword().equals(pe.getEncryptPassword(pfPassword.getText(),pe.getSalt()))){
+//        User user = new User();
+//        List<User> listUsers = em.createQuery("SELECT u FROM User u").getResultList();
+//        boolean isLogin = false;
+//        for (int i = 0; i < listUsers.size(); i++) {
+//            user = listUsers.get(i);
+//            if(user.getLogin().equals(tfLogin.getText()) && user.getPassword().equals(pe.getEncryptPassword(pfPassword.getText(),pe.getSalt()))){
+//                javafxlibrary.JavaFxLibrary.currentUser = user;
+//                isLogin = true;
+//                break;
+//            }
+//        }
+//        if(!isLogin){
+//            lbInfo.setText("Нет такого кользователея или неправильный пароль");
+//        }else{
+//           lbInfo.setText(String.format("Привет %s %s, добро пожаловть!", user.getFirstname(), user.getLastname()));
+//        }
+        try {
+            User user = (User) em.createQuery("SELECT u FROM User u WHERE u.login = :login")
+                    .setParameter("login", tfLogin.getText())
+                    .getSingleResult();
+            if(user.getPassword().equals(pe.getEncryptPassword(pfPassword.getText(), pe.getSalt()))){
+                if(lbInfo.getStyleClass().contains("error-text")){
+                    lbInfo.getStyleClass().remove("error-text");
+                }
+                if(!lbInfo.getStyleClass().contains("info-text")){
+                    lbInfo.getStyleClass().add("info-text");
+                }
+                lbInfo.setText(String.format("Привет %s %s, добро пожаловть!", user.getFirstname(), user.getLastname()));
                 javafxlibrary.JavaFxLibrary.currentUser = user;
-                isLogin = true;
-                break;
+                tfLogin.setText("");
+                pfPassword.setText("");
+            }else{
+                throw new Exception();
             }
-        }
-        if(!isLogin){
+            
+        } catch (Exception e) {
+            if(!lbInfo.getStyleClass().contains("error-text")){
+                    lbInfo.getStyleClass().add("error-text");
+                }
+            if(!lbInfo.getStyleClass().contains("info-text")){
+                lbInfo.getStyleClass().remove("info-text");
+            }
             lbInfo.setText("Нет такого кользователея или неправильный пароль");
-        }else{
-           lbInfo.setText(String.format("Привет %s %s, добро пожаловть!", user.getFirstname(), user.getLastname()));
+            tfLogin.setText("");
+            pfPassword.setText("");
         }
-        tfLogin.setText("");
-        pfPassword.setText("");
     }
     /**
      * Initializes the controller class.

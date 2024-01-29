@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -62,11 +63,22 @@ public class BookController implements Initializable {
                bookWindow.close();
             }
         });
+       btCansel.setOnMouseClicked(event -> {
+           if (event.getButton() == MouseButton.PRIMARY) {
+               bookWindow.close();
+           }
+       });
+       
        btOk.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 takeOnBook(book);
             }
         });
+       btOk.setOnMouseClicked(event -> {
+           if (event.getButton() == MouseButton.PRIMARY) {
+               takeOnBook(book);
+           }
+       });
        hbButtons.getChildren().addAll(btOk,btCansel);
        vbBook.getChildren().add(hbButtons);
        Scene scene = new Scene(vbBook,550,700);

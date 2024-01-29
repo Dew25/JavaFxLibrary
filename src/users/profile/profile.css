@@ -1,0 +1,7 @@
+
+.info-text{
+    -fx-text-fill: #4333eb;
+}
+.error-text{
+    -fx-text-fill: #eb33b3;
+}

@@ -49,6 +49,7 @@ public class NewuserController implements Initializable {
             tfPassword.setText("");
             lbInfo.setText(String.format("Пользоватеуль %s добавлен", user.getLogin()));
         } catch (Exception e) {
+            em.getTransaction().setRollbackOnly();
             lbInfo.setText("Пользователя добавить не удалось, возможно такой логин уже зарегистрирован");
             System.out.println("Записать пользовател в базу не удалось: "+e);
         }
@@ -67,7 +68,7 @@ public class NewuserController implements Initializable {
         // Обработчик события для Button
         btAddNewUser.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-               btAddNewUser.fire();
+               clickAddNewUser();
             }
         });
 

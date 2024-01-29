@@ -30,6 +30,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import users.login.LoginController;
 import users.newuser.NewuserController;
+import users.profile.ProfileController;
 
 /**
  *
@@ -50,6 +51,26 @@ public class HomeController implements Initializable {
         
     }    
     
+    public void mbShowProfileForm(){
+        if(javafxlibrary.JavaFxLibrary.currentUser == null){
+            this.infoMessage="Авторизуйтесь";
+            this.mbShowLonginForm();
+            return;
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/users/profile/profile.fxml"));
+            VBox vbProfileRoot = loader.load();
+            ProfileController profileController = loader.getController();
+            profileController.setEntityManager(getApp().getEntityManager());
+            vbProfileRoot.setPrefWidth(JavaFxLibrary.WIDTH);
+            vbProfileRoot.setPrefHeight(JavaFxLibrary.HEIGHT);
+            this.vbContent.getChildren().clear();
+            vbContent.getChildren().add(vbProfileRoot);
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, "Нет /users/profile/profile.fxml", ex);
+        }
+    }
     public void mbShowAdminpaneForm(){
         if(javafxlibrary.JavaFxLibrary.currentUser == null || !javafxlibrary.JavaFxLibrary.currentUser.getRoles()
                 .contains(javafxlibrary.JavaFxLibrary.roles.ADMINISTRATOR.toString())){
@@ -60,15 +81,15 @@ public class HomeController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/admin/adminpane.fxml"));
-            AnchorPane apAdmilRoot = loader.load();
+            AnchorPane apAdminRoot = loader.load();
             AdminpaneController adminpaneController = loader.getController();
             adminpaneController.setEntityManager(getApp().getEntityManager());
             adminpaneController.setCbUsers();
             adminpaneController.setCbRoles();
-            apAdmilRoot.setPrefWidth(JavaFxLibrary.WIDTH);
-            apAdmilRoot.setPrefHeight(JavaFxLibrary.HEIGHT);
+            apAdminRoot.setPrefWidth(JavaFxLibrary.WIDTH);
+            apAdminRoot.setPrefHeight(JavaFxLibrary.HEIGHT);
             this.vbContent.getChildren().clear();
-            vbContent.getChildren().add(apAdmilRoot);
+            vbContent.getChildren().add(apAdminRoot);
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, "Нет /admin/adminpane.fxml", ex);
         }
@@ -87,7 +108,12 @@ public class HomeController implements Initializable {
         }
     }
     @FXML public void mbShowAddNewBook(){
-        if(javafxlibrary.JavaFxLibrary.currentUser == null || !javafxlibrary.JavaFxLibrary.currentUser.getRoles()
+        if(javafxlibrary.JavaFxLibrary.currentUser == null){
+            this.infoMessage="Для этого действия вы должны быть менеджером. Авторизуйтесь";
+            this.mbShowLonginForm();
+            return;
+        }
+        if(!javafxlibrary.JavaFxLibrary.currentUser.getRoles()
                 .contains(javafxlibrary.JavaFxLibrary.roles.MANAGER.toString())){
             this.infoMessage="Для этого действия вы должны быть менеджером. Авторизуйтесь";
             this.mbShowLonginForm();
